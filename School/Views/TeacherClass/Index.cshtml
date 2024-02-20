@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ClassDTO>
+
+<h2>Class List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Class Name Ar</th>
+            <th>Class Name En</th>
+            <th>View Students</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ClassNameAr</td>
+                <td>@item?.ClassNameEn</td>
+                <td><a style="text-decoration:none" asp-action="StudentsInClass" asp-route-classId="@item?.Id" asp-route-materialId="@item?.ClassMaterialForTeacher.Id">View Students</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,52 @@
+﻿@model LoginDTO
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="~/template/img/R.png"
+                     class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form method="post">
+                    <div class="form-outline mb-4">
+                        <input type="email" id="form3Example3" class="form-control form-control-lg"
+                               placeholder="Enter a valid email address" asp-for="@Model.Email" maxlength="@PersonConsts.MaxUserNameLength" />
+                        <label class="form-label" asp-for="@Model.Email">Email address</label>
+                        <span class="text text-danger" asp-validation-for="@Model.Email"></span>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                        <input type="password" id="form3Example4" class="form-control form-control-lg"
+                               placeholder="Enter password" asp-for="@Model.Password" maxlength="@PersonConsts.MaxPasswordLength" required />
+                        <label class="form-label" asp-for="@Model.Password">Password</label>
+                        <span style="color:red" asp-validation-for="@Model.Password"></span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Checkbox -->
+                        <div class="form-check mb-0">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                            <label class="form-check-label" for="form2Example3" >
+                                Remember me
+                            </label>
+                        </div>
+                        <a href="#!" class="text-body">Forgot password?</a>
+                    </div>
+                    <div class="error-message text text-danger">@ViewBag.ErrorMessage</div>
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                            LogIn
+                        </button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">
+                            Join To The EduSite
+                            <a asp-controller="Home" asp-action="Contact" class="link-danger">Contact Us</a>
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

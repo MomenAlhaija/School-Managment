@@ -1,0 +1,63 @@
+﻿@model IEnumerable<UserDTO>
+<div style="width:100%;padding:1%">
+    <a class="btn btn-info mb-3" asp-action="AddUser">Add User</a>
+    <div class="col">
+        <table class="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Full Name </th>
+                    <th>User Type</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.FullName</td>
+                        <td>@((UserType)user.UserType)</td>
+                        <td>
+                            <a class="btn btn-info" asp-action="EditUser" asp-route-id="@user.UserId">Edit</a>
+                            <a class="btn btn-secondary" asp-action="ResetPassword" asp-controller="User" asp-route-userId="@user.UserId">Reset Password</a>
+                            <a class="btn btn-danger" onclick="deleteUser(@user.UserId)">Delete</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function deleteUser(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this class!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Delete")",
+                    data: { id: id },
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'User Deleted Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1500);
+                    }
+                });
+            }
+        });
+    }
+</script>

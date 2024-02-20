@@ -1,0 +1,88 @@
+﻿@model IEnumerable<StudentDTO>
+
+<input type="hidden" id="materialId" data-material-id="@ViewBag.MaterialId" value="@ViewBag.MaterialId" />
+<input type="hidden" id="classId" data-class-id="@ViewBag.ClassId" value="@ViewBag.ClassId" />
+@if (Model.Count() > 0)
+{
+    <h2>Student List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Full Name Ar</th>
+                <th>Full Name En</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Grade</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FullNameAr</td>
+                    <td>@item?.FullNameEn</td>
+                    <td>@item.Age</td>
+                    <td>@item.Gender</td>
+                    <td>
+                        <span class="grade" data-student-id="@item.StudentId">@item?.Grade</span>
+                        <input type="text" class="edit-grade d-none" value="@item.Grade" data-student-id="@item?.StudentId" />
+                        <span asp-validation-for="@item.Grade"></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary assign-mark">
+                            @if (item.Grade is null)
+                            {
+                                <text>Assign Mark</text>
+                            }
+                            else
+                            {
+                                <text>Reassign Mark</text>
+
+                            }
+                        </button>
+                        <button class="btn btn-success save-grade d-none">Save</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".assign-mark").click(function () {
+                var row = $(this).closest("tr");
+                $(".grade", row).addClass("d-none");
+                $(".edit-grade", row).removeClass("d-none");
+                $(this).addClass("d-none");
+                $(".save-grade", row).removeClass("d-none");
+            });
+
+            $(".save-grade").click(function () {
+                var row = $(this).closest("tr");
+                var studentId = $(".grade, .edit-grade", row).data("student-id");
+                var newGrade = $(".edit-grade", row).val();
+                var materialId = $("#materialId").data("material-id");
+                var classId = $("#classId").data("class-id");
+                // Assuming AJAX call to update the grade
+                if (newGrade < 0 || newGrade > 100 || isNaN(newGrade)) {
+                    Swal.fire({
+                        icon: 'error',
+                        text: 'Grade must be a number between 0 and 100.',
+                    });
+                    return;
+
+                }
+                $.post("/TeacherClass/UpdateGrade", { StudentId: studentId, Grade: newGrade, MaterialId: materialId, ClassId: classId }, function () {
+                    $(".grade", row).text(newGrade).removeClass("d-none");
+                    $(".edit-grade", row).addClass("d-none");
+                    $(".save-grade", row).addClass("d-none");
+                    $(".assign-mark", row).removeClass("d-none");
+                    $(this).addClass("d-none");
+                });
+            });
+        });
+    </script>
+}
+

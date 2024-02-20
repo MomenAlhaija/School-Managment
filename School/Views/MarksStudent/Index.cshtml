@@ -1,0 +1,56 @@
+﻿@model MarksStudentDTO
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Student Information</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Name Ar:</th>
+                    <td>@Model.FullNameAr</td>
+                </tr>
+                <tr>
+                    <th>Name En:</th>
+                    <td>@Model.FullNameEn</td>
+                </tr>
+                <tr>
+                    <th>Student ID:</th>
+                    <td>@Model.StudentId</td>
+                </tr>
+                <tr>
+                    <th>Age:</th>
+                    <td>@Model.Age</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <th>Class:</th>
+                    <td>@Model.ClassName</td>
+                </tr>
+                <tr>
+                    <th>Gender:</th>
+                    <td>@Model.Gender</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h2>Marks</h2>
+            <table class="table table-striped">
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                </tr>
+                @foreach(var sub in Model.Grades)
+                {
+                    <tr>
+                        <td>@sub.MaterialNameAr</td>
+                        <td>@sub.Grade</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+

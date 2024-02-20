@@ -1,0 +1,16 @@
+﻿@model AddOrUpdateMaterialDTO
+<form method="post" style="width:80%;padding:10%">
+    <h3 style="color:red">@ViewBag.ErrorMessage</h3>
+    <div class="form-group">
+        <label asp-for="@Model.MaterialNameAr">Material Name Ar</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Material Name Ar" asp-for="@Model.MaterialNameAr"  maxlength="@MaterialConsts.MaxMateriaNamelLength" required>
+        <span style="color:red" asp-validation-for="@Model.MaterialNameAr"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.MaterialNameEn">Material Name En</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Material Name En" asp-for="@Model.MaterialNameEn"  maxlength="@MaterialConsts.MaxMateriaNamelLength">
+        <span style="color:red" asp-validation-for="@Model.MaterialNameEn"></span>
+    </div>
+    <button class="btn btn-primary" style="margin-top:25px" type="submit">Add</button>
+    <a class="btn btn-secondary" style="margin-top:26px" asp-action="Index">Back To List</a>
+</form>

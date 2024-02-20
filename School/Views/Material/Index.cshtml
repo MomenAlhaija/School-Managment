@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MaterialDTO>
+<div style="width:100%;padding:3% 5%">
+    <a class="btn btn-info mb-3 " asp-action="AddMaterial">Add Material</a>
+    <div class="col">
+        <table class="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Material Name Ar</th>
+                    <th scope="col">Material Name En</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var material in Model)
+                {
+                    <tr>
+                        <td>
+                            @material.MaterialNameAr
+                        </td>
+                        <td>@material.MaterialNameEn</td>
+                        <td>
+                            <a class="btn btn-info" asp-action="EditMaterial" asp-route-id="@material.Id">Edit</a>
+                            <a class="btn btn-danger" onclick="deleteMaterial(@material.Id)">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function deleteMaterial(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this class!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Delete")",
+                    data: { id: id },
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Material Deleted Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1500);
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>

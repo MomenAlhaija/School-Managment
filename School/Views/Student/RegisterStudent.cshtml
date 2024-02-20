@@ -1,0 +1,44 @@
+﻿@model RegisterStudentDTO
+<form method="post" style="width:80%;padding:10%">
+    <h3 style="color:red">@ViewBag.ErrorMessage</h3>
+    <div class="form-group">
+        <label asp-for="@Model.Email">Email</label>
+        <input type="email" class="form-control" id="formGroupExampleInput" placeholder="Please Enter Email" asp-for="@Model.Email"  maxlength="@PersonConsts.MaxUserNameLength" pattern="@PersonConsts.EmailFormat" required>
+        <span style="color:red" asp-validation-for="@Model.Email"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Password">Password</label>
+        <input type="password" class="form-control" id="formGroupExampleInput" placeholder="Please Enter Password" required asp-for="@Model.Password" pattern="@PersonConsts.PasswordFormat"  maxlength="@PersonConsts.MaxPasswordLength">
+        <span style="color:red" asp-validation-for="@Model.Password"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.FullNameAr">Full Name Ar</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Full  Name Ar" asp-for="@Model.FullNameAr" required  maxlength="@PersonConsts.MaxFullNameLength">
+        <span style="color:red" asp-validation-for="@Model.FullNameAr"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.FullNameEn">Full Name En</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Full Name En" asp-for="@Model.FullNameEn" maxlength="@PersonConsts.MaxFullNameLength">
+        <span style="color:red" asp-validation-for="@Model.FullNameEn"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Age">Age</label>
+        <input type="number" class="form-control" id="formGroupExampleInput2" placeholder="Please Enter Age" asp-for="@Model.Age" required min="@PersonConsts.MinAge" max="@PersonConsts.MaxAge">
+        <span style="color:red" asp-validation-for="@Model.Age"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Gender">Gender</label>
+        <select class="form-select" asp-for="@Model.Gender" required  >
+            <option value="@((int)Gender.Male)">@Gender.Male</option>
+            <option value="@((int)Gender.Female)">@Gender.Female</option>
+        </select>
+        <span style="color:red" asp-validation-for="@Model.Gender"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.ClassId">Classes</label>
+        <select class="form-select" asp-for="@Model.ClassId" asp-items="@Model.ClassItems" required></select>
+        <span style="color:red" asp-validation-for="@Model.ClassId"></span>
+    </div>
+    <button class="btn btn-primary" style="margin-top:25px" type="submit">Add</button>
+    <a class="btn btn-secondary" style="margin-top:26px" asp-action="Index">Back To List</a>
+</form>

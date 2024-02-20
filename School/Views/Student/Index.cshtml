@@ -1,0 +1,76 @@
+﻿@model IEnumerable<RegisterStudentDTO>
+<div style="width:100%;padding:1%">
+    <a class="btn btn-info mb-3" asp-action="RegisterStudent">Add Student</a>
+    <div class="col">
+        <table class="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Full Name Ar</th>
+                    <th scope="col">Full Name En</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Age</th>
+                    <th scope="col">Class Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model.ToList())
+                {
+                    <tr>
+                        <td>@student.Email</td>
+                        <td>@student.FullNameAr</td>
+                        <td>@student.FullNameEn</td>
+                        <td>@((Gender)(student.Gender))</td>
+                        <td>@student.Age</td>
+                        <td>@student.ClassName</td>
+                        <td>
+                            <a class="btn btn-info" asp-action="EditStudent" asp-route-id="@student.Id">Edit</a>
+                            <a class="btn btn-secondary" asp-action="ResetPassword" asp-controller="User" asp-route-userId="@student.UserId" asp-route-returnPath="@Url.Action("Index","Student")">Reset Password</a>
+                            <a class="btn btn-danger" onclick="deleteStudent(@student.Id)">Delete</a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function deleteStudent(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this class!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("Delete")",
+                    data: { id: id },
+                    success: function () {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Student Deleted Successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 1500);
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        });
+                    }
+                });
+            }
+        });
+    }
+</script>

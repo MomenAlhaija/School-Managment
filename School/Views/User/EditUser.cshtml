@@ -1,0 +1,26 @@
+﻿@model UserDTO
+<form method="post" style="width:80%;padding:10%">
+    <h3 style="color:red">@ViewBag.ErrorMessage</h3>
+    <input type="hidden" asp-for="@Model.UserId" value="@Model.UserId" contenteditable="false" />
+    <div class="form-group">
+        <label asp-for="@Model.UserName">Email</label>
+        <input type="email" class="form-control" id="formGroupExampleInput" placeholder="Please Enter Email" asp-for="@Model.UserName">
+        <span asp-validation-for="@Model.UserName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.FullName">Full Name </label>
+        <input type="text" class="form-control" id="formGroupExampleInput" maxlength="@PersonConsts.MaxUserNameLength" pattern="@PersonConsts.EmailFormat" placeholder="Full Name " asp-for="@Model.FullName">
+        <span style="color:red" asp-validation-for="@Model.FullName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.UserType">User Type</label>
+        <select class="form-select" asp-for="@Model.UserType" required>
+            <option value="@((int)UserType.Student)">@UserType.Student</option>
+            <option value="@((int)UserType.Teacher)">@UserType.Teacher</option>
+            <option value="@((int)UserType.Admin)">@UserType.Admin</option>
+        </select>
+        <span style="color:red" asp-validation-for="@Model.UserType"></span>
+    </div>
+    <button class="btn btn-primary" style="margin-top:25px" type="submit">Save Changes</button>
+    <a class="btn btn-secondary" style="margin-top:26px" asp-action="Index">Back To List</a>
+</form>

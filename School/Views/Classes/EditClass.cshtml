@@ -1,0 +1,22 @@
+﻿@model ClassDTO
+<form method="post" style="width:80%;padding:10%">
+    <h3 style="color:red">@ViewBag.ErrorMessage</h3>
+    <input type="hidden" asp-for="@Model.Id" value="@Model.Id.Value" />
+    <div class="form-group">
+        <label asp-for="@Model.ClassNameAr">Class Name Ar</label>
+        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Class Name Ar" asp-for="@Model.ClassNameAr"  maxlength="@ClassConsts.MaxClassNameLength" required>
+        <span style="color:red" asp-validation-for="@Model.ClassNameAr"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.ClassNameEn">Class Name En</label>
+        <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Class Name En" asp-for="@Model.ClassNameEn"  maxlength="@ClassConsts.MaxClassNameLength">
+        <span style="color:red" asp-validation-for="@Model.ClassNameEn"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.MaterialsIds">Class Name En</label>
+        <select class="form-control" id="formGroupExampleInput2" asp-for="@Model.MaterialsIds" asp-items="@Model.MateriaLItems" multiple required></select>
+        <span style="color:red" asp-validation-for="@Model.MaterialsIds"></span>
+    </div>
+    <button class="btn btn-primary" style="margin-top:25px" type="submit">Save Changes</button>
+    <a class="btn btn-secondary" style="margin-top:26px" asp-action="Index">Back To List</a>
+</form>
